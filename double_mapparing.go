@@ -24,6 +24,14 @@ func New[T any](
 	return dbm
 }
 
+func (dbm *DoubleBuffer[T]) clone(src *T) (*T, error) {
+	b, err := dbm.marshal(src)
+	if err != nil {
+		return nil, err
+	}
+	return dbm.unmarshal(b)
+}
+
 func (dbm *DoubleBuffer[T]) Update(fn func(data *T) error) error {
 	dbm.mtx.Lock()
 	defer dbm.mtx.Unlock()
@@ -41,14 +49,6 @@ func (dbm *DoubleBuffer[T]) Update(fn func(data *T) error) error {
 	return nil
 }
 
-func (dbm *DoubleBuffer[T]) clone(src *T) (*T, error) {
-	b, err := dbm.marshal(src)
-	if err != nil {
-		return nil, err
-	}
-	return dbm.unmarshal(b)
-}
-
 func (dbm *DoubleBuffer[T]) View(fn func(data *T) error) error {
 	snap, err := dbm.clone(dbm.active.Load())
 	if err != nil {
@@ -59,4 +59,21 @@ func (dbm *DoubleBuffer[T]) View(fn func(data *T) error) error {
 
 func (dbm *DoubleBuffer[T]) Raw() *T {
 	return dbm.active.Load()
+}
+
+func (dbm *DoubleBuffer[T]) Bytes() ([]byte, error) {
+	return dbm.marshal(dbm.active.Load())
+}
+
+func (dbm *DoubleBuffer[T]) Restore(b []byte) error {
+	newData, err := dbm.unmarshal(b)
+	if err != nil {
+		return err
+	}
+
+	dbm.mtx.Lock()
+	defer dbm.mtx.Unlock()
+
+	dbm.active.Store(newData)
+	return nil
 }
