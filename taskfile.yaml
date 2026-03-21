@@ -1,7 +1,7 @@
 version: 3
 
 vars:
-  VERSION: v0.1.0
+  VERSION: v0.2.0
   BIN_NAME: "do-test"
   BIN_DIR: "bin"
   BIN_PATH: "{{.BIN_DIR}}/{{.BIN_NAME}}"
