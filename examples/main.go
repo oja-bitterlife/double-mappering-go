@@ -19,13 +19,15 @@ type Metadata struct {
 }
 
 func main() {
-	// New を使って一撃で初期化
-	db := doublemapparing.New[Config](
-		func(v any) ([]byte, error) { return json.Marshal(v) },
-		func(b []byte, v any) error { return json.Unmarshal(b, v) },
+	db := doublemapparing.New(
+		func(v *Config) ([]byte, error) { return json.Marshal(v) },
+		func(b []byte) (*Config, error) {
+			var c Config
+			err := json.Unmarshal(b, &c)
+			return &c, err
+		},
 	)
 
-	// あとは Update や Raw を呼ぶだけ
 	db.Update(func(cfg *Config) error {
 		cfg.Version = 2
 		return nil

@@ -8,13 +8,13 @@ import (
 type DoubleBuffer[T any] struct {
 	active    atomic.Pointer[T]
 	mtx       sync.Mutex
-	marshal   func(any) ([]byte, error)
-	unmarshal func([]byte, any) error
+	marshal   func(*T) ([]byte, error)
+	unmarshal func([]byte) (*T, error)
 }
 
 func New[T any](
-	marshal func(any) ([]byte, error),
-	unmarshal func([]byte, any) error,
+	marshal func(*T) ([]byte, error),
+	unmarshal func([]byte) (*T, error),
 ) *DoubleBuffer[T] {
 	dbm := &DoubleBuffer[T]{
 		marshal:   marshal,
@@ -46,11 +46,7 @@ func (dbm *DoubleBuffer[T]) clone(src *T) (*T, error) {
 	if err != nil {
 		return nil, err
 	}
-	var dst T
-	if err := dbm.unmarshal(b, &dst); err != nil {
-		return nil, err
-	}
-	return &dst, nil
+	return dbm.unmarshal(b)
 }
 
 func (dbm *DoubleBuffer[T]) View(fn func(data *T) error) error {

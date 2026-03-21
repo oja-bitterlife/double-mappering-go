@@ -13,8 +13,12 @@ type TestData struct {
 }
 
 func TestDoubleBuffer_Race(t *testing.T) {
-	m := func(v any) ([]byte, error) { return json.Marshal(v) }
-	u := func(b []byte, v any) error { return json.Unmarshal(b, v) }
+	m := func(v *TestData) ([]byte, error) { return json.Marshal(v) }
+	u := func(b []byte) (*TestData, error) {
+		var d TestData
+		err := json.Unmarshal(b, &d)
+		return &d, err
+	}
 	testData := dbm.New[TestData](m, u)
 
 	var wg sync.WaitGroup

@@ -1,6 +1,7 @@
 version: 3
 
-env:
+vars:
+  VERSION: v0.1.0
   BIN_NAME: "do-test"
   BIN_DIR: "bin"
   BIN_PATH: "{{.BIN_DIR}}/{{.BIN_NAME}}"
@@ -33,7 +34,7 @@ tasks:
     deps:
       - build
     cmds:
-      - git tag $(./{{.BIN_PATH}} version)
+      - git tag {{.VERSION}}
       - git tag
 
   default:
