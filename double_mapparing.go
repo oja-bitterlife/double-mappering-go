@@ -30,11 +30,27 @@ func New[T any](
 	marshal func(*T) ([]byte, error),
 	unmarshal func([]byte) (*T, error),
 ) *DoubleMappering[T] {
+	return NewFromData[T](nil, marshal, unmarshal)
+}
+
+// ==================================================
+// NewFromData: 既存のデータを初期値として新しい管理構造体を作成します。
+func NewFromData[T any](
+	data *T,
+	marshal func(*T) ([]byte, error),
+	unmarshal func([]byte) (*T, error),
+) *DoubleMappering[T] {
 	dbm := &DoubleMappering[T]{
 		marshal:   marshal,
 		unmarshal: unmarshal,
 	}
-	dbm.raw.Store(new(T)) // 初期値としてゼロ値の構造体をセット
+
+	// nilが渡されたらゼロ値の構造体を初期値に
+	if data == nil {
+		data = new(T)
+	}
+
+	dbm.raw.Store(data)
 	return dbm
 }
 

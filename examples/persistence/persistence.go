@@ -35,12 +35,14 @@ func main() {
 		return nil
 	})
 
-	// 保存 (本来は os.WriteFile など)
+	// 保存
 	data, _ := src.Bytes()
-	// debug output
+	// ここでdataを保存する
+	// サンプルでは代わにdebug output
 	fmt.Println(string(data))
 
 	// 復元
+	// ファイルのロードなどからdataを取得しておく
 	dest := dbm.New(
 		func(c *Config) ([]byte, error) { return json.Marshal(c) },
 		func(b []byte) (*Config, error) {
@@ -51,6 +53,6 @@ func main() {
 	)
 	_ = dest.Restore(data)
 
+	// 復元後のデータを確認
 	fmt.Println(dest.Raw().AppID) // Output: Persistence Example
-	// Output: Gopher
 }
