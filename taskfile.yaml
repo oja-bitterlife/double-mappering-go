@@ -1,9 +1,8 @@
 version: 3
 
 vars:
-  VERSION: v0.4.0
+  VERSION: v0.4.1
   BIN_DIR: "bin"
-  DB_NAME: "{{.BIN_NAME}}.json"
 
 tasks:
   build:
