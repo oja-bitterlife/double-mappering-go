@@ -14,7 +14,7 @@
 - tinygo対応
     - まだ未確認_(:3」∠)_ﾀﾌﾞﾝﾀﾞｲｼﾞｮｳﾌﾞ...
 
-## install
+## インストール
 ```bash
 go get github.com/oja-bitterlife/double-mapparing-go
 ```
