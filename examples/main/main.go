@@ -28,10 +28,20 @@ func main() {
 		},
 	)
 
+	// 初期値の設定
+	config.Raw().Version = 1
+
+	view, err := config.View()
+	if err != nil {
+		fmt.Printf("Error viewing config: %v\n", err)
+		return
+	}
+
 	config.Update(func(cfg *Config) error {
 		cfg.Version = 2
 		return nil
 	})
 
-	fmt.Printf("Current Version: %d\n", config.Raw().Version)
+	fmt.Printf("Befor Update Version: %d\n", view.Version)
+	fmt.Printf("After Update Version: %d\n", config.Raw().Version)
 }
