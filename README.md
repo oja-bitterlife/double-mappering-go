@@ -13,7 +13,18 @@
     - もちろんgo getでも使える
     - 他ライブラリへの依存ゼロ。標準ライブラリのsyncのみ使用
 - tinygo対応
-    - まだ未確認_(:3」∠)_ﾀﾌﾞﾝﾀﾞｲｼﾞｮｳﾌﾞ...
+  ```
+  # シリアライズに標準のJSONパッケージ
+  > tinygo build -o bin/main -no-debug .
+
+  # MsgPack(msgp:※リフレクション無し)使用
+  ❯ tinygo build -o bin/main_min.wasm -target wasm -no-debug .
+
+  # リフレクション外すとめっちゃ小さくなるよ！('(ﾟ∀ﾟ∩ 
+  ❯ ls bin/* -lah
+  -rwxr-xr-x 1 oja oja 362K Mar 23 15:33 bin/main*
+  -rwxr-xr-x 1 oja oja  81K Mar 23 15:36 bin/main_min.wasm*
+  ```
 
 ## インストール
 ```bash
