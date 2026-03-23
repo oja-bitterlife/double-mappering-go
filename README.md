@@ -75,7 +75,7 @@ dbm.Restore(data)
 ```go
 // シングルスレッドであればRaw()で変更可能
 data = dbm.Raw()
-data.Version = 1
+data.AppID = "Single Only"
 
 // 初期化データを渡せるNewも用意しています
 dbm := doublemappering.NewFromData(
