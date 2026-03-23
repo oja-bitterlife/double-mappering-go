@@ -70,3 +70,15 @@ os.WriteFile("config.json", b, 0644)
 data, _ := os.ReadFile("config.json")
 dbm.Restore(data)
 ```
+
+初期化でUpdateのクロージャを書くのはメンドクサ('A`)？
+```go
+// Newのタイミングで初期化
+dbm := doublemappering.NewFromData(
+    initial_data,  // 第一引数でデータの入った構造体を渡せる
+    ...
+
+// シングルスレッドであればRaw()でも変更可能
+data = dbm.Raw()
+data.Version = 1
+```
