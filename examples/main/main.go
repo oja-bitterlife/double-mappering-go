@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	dbm "github.com/oja-bitterlife/double-mapparing-go"
+	dbm "github.com/oja-bitterlife/double-mappering-go"
 )
 
 // テスト用のデータ構造（ネストしたもの）

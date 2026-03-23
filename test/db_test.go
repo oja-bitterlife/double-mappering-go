@@ -1,11 +1,11 @@
-package doublemapparing
+package doublemappering
 
 import (
 	"encoding/json"
 	"sync"
 	"testing"
 
-	dbm "github.com/oja-bitterlife/double-mapparing-go"
+	dbm "github.com/oja-bitterlife/double-mappering-go"
 )
 
 type TestData struct {

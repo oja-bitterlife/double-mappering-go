@@ -17,9 +17,9 @@
 
 ## インストール
 ```bash
-go get github.com/oja-bitterlife/double-mapparing-go
+go get github.com/oja-bitterlife/double-mappering-go
 ```
-あるいは`double-mapparing.go`をコピーして自分のプロジェクトにおいてください。
+あるいは`double-mappering.go`をコピーして自分のプロジェクトにおいてください。
 
 ## 使い方
 ```go
@@ -28,7 +28,7 @@ type Config struct {
 }
 
 // 初期化
-dbm := doublemapparing.New(
+dbm := doublemappering.New(
     func(c *Config) ([]byte, error) { return json.Marshal(c) },
     func(b []byte) (*Config, error) {
         var c Config

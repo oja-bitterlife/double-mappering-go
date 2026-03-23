@@ -8,7 +8,7 @@
 //     ファイルへの保存にも使えるようにしておきました。
 //
 // ######################################################################
-package doublemapparing
+package doublemappering
 
 import (
 	"sync"
