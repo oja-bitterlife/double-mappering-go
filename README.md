@@ -73,12 +73,12 @@ dbm.Restore(data)
 
 初期化でUpdateのクロージャを書くのはメンドクサ('A`)？
 ```go
-// Newのタイミングで初期化
+// シングルスレッドであればRaw()で変更可能
+data = dbm.Raw()
+data.Version = 1
+
+// 初期化データを渡せるNewも用意しています
 dbm := doublemappering.NewFromData(
     initial_data,  // 第一引数でデータの入った構造体を渡せる
     ...
-
-// シングルスレッドであればRaw()でも変更可能
-data = dbm.Raw()
-data.Version = 1
 ```
